@@ -1,0 +1,3 @@
+# Work laptop
+
+export DOCKER_MIX_ENV=prod
