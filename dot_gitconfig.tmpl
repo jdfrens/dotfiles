@@ -1,0 +1,62 @@
+[user]
+	name = Jeremy D. Frens
+	email = {{ .gitconfig.email }}
+        useConfigOnly = true
+	signingkey = {{ .gitconfig.signingkey }}
+[color]
+        status = auto
+        branch = auto
+[github]
+        user = jdfrens
+[alias]
+        co = checkout
+        st = status
+        changes=diff --name-status -r
+        lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+        create-pull-request = !sh -c 'stash pull-request $0 $@'
+[core]
+        # search for core.pager in
+        # <http://www.kernel.org/pub/software/scm/git/docs/git-config.html>
+        # to see why we use this convoluted syntax
+        #pager = less -$LESS -SFRX -SR +'/^---'
+	excludesfile = /Users/jeremy.frens/.gitignore_global
+[credential]
+	helper = osxkeychain
+[push]
+        default = upstream
+[fetch]
+        prune = true
+[commit]
+	gpgsign = true
+	template = /Users/jfrens/.stCommitMsg
+[tag]
+	gpgsign = true
+[gpg]
+	program = /usr/local/bin/gpg
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool]
+    prompt = false
+[diff]
+    tool = Kaleidoscope
+[mergetool "Kaleidoscope"]
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool]
+    prompt = false
+[merge]
+    tool = Kaleidoscope
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[rerere]
+	enabled = 1
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[pull]
+	ff = only
